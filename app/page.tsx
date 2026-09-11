@@ -66,14 +66,14 @@ return (
 <main className="min-h-screen bg-orange-50 px-4 py-10">
   <div className="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg">
     <div className="mb-4 flex items-center justify-center gap-2 text-orange-600">
-      <svg className="lucide lucide-pizza" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"    viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+      <svg className="lucide lucide-pizza" fill="none" height="24" stroke="currentColor"  strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
         <path d="m12 14-1 1"/>
         <path d="m13.75 18.25-1.25 1.42"/>
         <path d="M17.775 5.654a15.68    15.68 0 0 0-12.121 12.12"/>
         <path d="M18.8 9.3a1 1 0 0 0 2.1 7.7"/>
         <path d="M21.964 20.732a1 1 0 0 1-1.232 1.232l-18-5a1 1 0 0 1-.695-1.232A19.68 19.68    0 0 1 15.732 2.037a1 1 0 0 1 1.232.695z"/>
       </svg>
-      <h1 className="text-3xl font-bold text-orange-600 text-center">St.Stephen's 7 Pizza</h1>
+      <h1 className="text-3xl font-bold text-orange-600 text-center">St.Stephens 7 Pizza</h1>
     </div>
     <p className="mt-2 text-gray-600 text-center" >{name ? `Kedves ${name}, állítsd össze a pizzádat!` : "Add meg a nevedet!"}</p>
     <div className="mt-6">
