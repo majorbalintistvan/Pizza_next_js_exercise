@@ -8,123 +8,105 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const sizes = [
-  {
-    id: "kicsi",
-    label: "Kicsi (24 cm)",
-    price: 1800,
-  },
-  {
-    id: "kozepes",
-    label: "Közepes (32 cm)",
-    price: 2400,
-  },
-  {
-    id: "nagy",
-    label: "Nagy (45 cm)",
-    price: 3200,
-  },
+const SIZES = [
+{
+id: "kicsi",
+label: "Kicsi (24 cm)",
+price: 1800,
+},
+{
+id: "kozepes",
+label: "Közepes (32 cm)",
+price: 2400,
+},
+{
+id: "nagy",
+label: "Nagy (45 cm)",
+price: 3200,
+},
 ];
 
-const toppings = [
-  {
-    id: "sonka",
-    label: "Sonka",
-    price: 350,
-  },
-  {
-    id: "gomba",
-    label: "Gomba",
-    price: 250,
-  },
-  {
-    id: "kukorica",
-    label: "Kukorica",
-    price: 200,
-  },
-  {
-    id: "szalami",
-    label: "Szalámi",
-    price: 400,
-  },
-  {
-    id: "paprika",
-    label: "Paprika",
-    price: 250,
-  },
-  {
-    id: "sajt",
-    label: "Extra sajt",
-    price: 450,
-  },
+const TOPPINGS = [
+{
+id: "sonka",
+label: "Sonka",
+price: 350,
+},
+{
+id: "gomba",
+label: "Gomba",
+price: 250,
+},
+{
+id: "kukorica",
+label: "Kukorica",
+price: 200,
+},
+{
+id: "szalami",
+label: "Szalámi",
+price: 400,
+},
+{
+id: "paprika",
+label: "Paprika",
+price: 250,
+},
+{
+id: "sajt",
+label: "Extra sajt",
+price: 450,
+},
 ];
 
 export default function HomePage() {
-  const [name, setName] = useState("");
-  const [sizeId, setSizeId] = useState("kozepes");
-  const [takeaway, setTakeaway] = useState(false);
-  const [qty, setQty] = useState(1);
+const [name, setName] = useState("");
+const [sizeId, setSizeId] = useState("kozepes");
+const [toppingIds, setToppingIds] = useState<string[]>([]);
+const [takeaway, setTakeaway] = useState(false);
 
-  return (
-    <main className="min-h-screen bg-orange-50 px-4 py-10">
-      <div className="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg">
-        <div className="mb-4 flex items-center justify-center gap-2 text-orange-600">
-          <svg
-            className="lucide lucide-pizza"
-            fill="none"
-            height="24"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="m12 14-1 1" />
-            <path d="m13.75 18.25-1.25 1.42" />
-            <path d="M17.775 5.654a15.68    15.68 0 0 0-12.121 12.12" />
-            <path d="M18.8 9.3a1 1 0 0 0 2.1 7.7" />
-            <path d="M21.964 20.732a1 1 0 0 1-1.232 1.232l-18-5a1 1 0 0 1-.695-1.232A19.68 19.68    0 0 1 15.732 2.037a1 1 0 0 1 1.232.695z" />
-          </svg>
-          <h1 className="text-center text-3xl font-bold text-orange-600">St.Stephen's 7 Pizza</h1>
-        </div>
-        <p className="mt-2 text-center text-gray-600">
-          {name ? `Kedves ${name}, állítsd össze a pizzádat!` : "Add meg a nevedet!"}
-        </p>
-        <div className="mt-6">
-          <label className="mb-2 block font-semibold text-gray-700">Vendég neve</label>
-          <input
-            className="w-full rounded-xl border border-gray-300 px-4 py-2 transition outline-none focus:border-orange-500"
-            placeholder="Írd be a neved"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        {/* Méret */}
-        <div className="mt-6">
-          <h2 className="mb-3 text-xl font-bold text-gray-800">Méret</h2>
-          <div className="grid grid-cols-3 gap-3">
-            {sizes.map((size) => {
-              const active = size.id === sizeId;
-              return (
+return (
+<main className="min-h-screen bg-orange-50 px-4 py-10">
+  <div className="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg">
+    <div className="mb-4 flex items-center justify-center gap-2 text-orange-600">
+      <svg className="lucide lucide-pizza" fill="none" height="24" stroke="currentColor"  strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="m12 14-1 1"/>
+        <path d="m13.75 18.25-1.25 1.42"/>
+        <path d="M17.775 5.654a15.68    15.68 0 0 0-12.121 12.12"/>
+        <path d="M18.8 9.3a1 1 0 0 0 2.1 7.7"/>
+        <path d="M21.964 20.732a1 1 0 0 1-1.232 1.232l-18-5a1 1 0 0 1-.695-1.232A19.68 19.68    0 0 1 15.732 2.037a1 1 0 0 1 1.232.695z"/>
+      </svg>
+      <h1 className="text-3xl font-bold text-orange-600 text-center">St.Stephens 7 Pizza</h1>
+    </div>
+    <p className="mt-2 text-gray-600 text-center" >{name ? `Kedves ${name}, állítsd össze a pizzádat!` : "Add meg a nevedet!"}</p>
+    <div className="mt-6">
+      <label className="mb-2 block font-semibold text-gray-700">Vendég neve</label>
+      <input
+        className="w-full rounded-xl border border-gray-300 px-4 py-2 outline-none transition focus:border-orange-500"
+        placeholder="Írd be a neved"
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}/>
+      
+    </div>
+    {/* Méret */}
+    <div className="mt-6">
+      <h2 className="mb-3 text-xl font-bold text-gray-800">Méret</h2>
+      <div className="grid grid-cols-3 gap-3">{SIZES.map((size) => {
+          const active = size.id === sizeId;
+          return (
                 <button
                   className={`cursor-pointer rounded-xl border px-4 py-3 transition active:scale-95 ${active ? "border-orange-500 bg-orange-50 font-semibold text-orange-700" : "border-gray-200 bg-white hover:bg-gray-50"}`}
                   key={size.id}
                   onClick={() => setSizeId(size.id)}
-                >
                   <div>{size.label}</div>
                   <div className="mt-1 text-sm">{size.price} Ft</div>
-                </button>
-              );
+                </button>);
             })}
           </div>
         </div>
-        {/* Darabszám */}
         <div className="mt-6 flex items-center justify-between">
           <h2 className="text-xl font-bold text-gray-800">Darabszám</h2>
-
           <div className="flex items-center gap-4">
             <button
               className="cursor-pointer rounded-xl border border-gray-200 bg-white px-4 py-2 text-xl transition hover:bg-gray-50 active:scale-95"
@@ -134,16 +116,11 @@ export default function HomePage() {
                     toast.error("Legalább 1 darabot kell kérni.");
                     return prev;
                   }
-
                   return prev - 1;
                 });
               }}
-            >
-              −
             </button>
-
             <span className="min-w-10 text-center text-xl font-semibold">{qty}</span>
-
             <button
               className="cursor-pointer rounded-xl border border-gray-200 bg-white px-4 py-2 text-xl transition hover:bg-gray-50 active:scale-95"
               onClick={() => {
@@ -152,27 +129,37 @@ export default function HomePage() {
                     toast.error("Legfeljebb 10 darabot lehet kérni.");
                     return prev;
                   }
-
                   return prev + 1;
                 });
               }}
-            >
-              +
             </button>
           </div>
         </div>
-
-        {/*Kedvezmény*/}
         <div className="mt-6 flex items-center gap-3">
           <input
             type="checkbox"
             checked={takeaway}
             onChange={(e) => setTakeaway(e.target.checked)}
-            className="h-5 w-5 cursor-pointer"
-          />
+            className="h-5 w-5 cursor-pointer"/>
           <label className="cursor-pointer">Elvitelre kérem (−10%)</label>
         </div>
       </div>
-    </main>
-  );
-}
+    {/* Feltétek */}
+    <div className="mt-6">
+      <h2 className="mb-3 text-xl font-bold text-gray-800">Feltétek {toppingIds.length} kiválasztva</h2>
+      <div className="grid grid-cols-3 gap-3">{TOPPINGS.map((topping) => {
+          const selected = toppingIds.includes(topping.id);
+          return (
+            <button className={`cursor-pointer rounded-xl border px-4 py-3 transition active:scale-95 
+                ${selected ? "border-orange-500 bg-orange-50 font-semibold text-orange-700" : "border-gray-200 bg-white hover:bg-gray-50"}`} key={topping.id} onClick={() => { 
+                  if (selected) setToppingIds(toppingIds.filter((id) => id !== topping.id)); 
+                  else setToppingIds([...toppingIds, topping.id]);
+                }}>
+              <div>{topping.label}</div>
+              <div className="mt-1 text-sm">{topping.price} Ft</div>
+            </button>);
+        })}
+      </div>
+    </div>
+  </div>
+</main>
