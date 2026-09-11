@@ -1,20 +1,134 @@
 "use client";
 
+//import Image from "next/image";
+
+// --- Konstans adatok ---// Ezek NEM állapotok, mert soha nem változnak. A komponens FÖLÖTT vannak,// így nem keletkeznek újra minden rendereléskor.type SizeItem = {  id: string;  label: string;  price: number;};
+// const SIZES: SizeItem[] = [  { id: "kicsi", label: "Kicsi (24 cm)", price: 1800 },  { id: "kozepes", label: "Közepes (32 cm)", price: 2400 },  { id: "nagy", label: "Nagy (45 cm)", price: 3200 },];
+
 import { useState } from "react";
 
-import IncrementButton from "@/app/IncrementButton";
+const sizes = [
+{
+id: "kicsi",
+label: "Kicsi (24 cm)",
+price: 1800,
+},
+{
+id: "kozepes",
+label: "Közepes (32 cm)",
+price: 2400,
+},
+{
+id: "nagy",
+label: "Nagy (45 cm)",
+price: 3200,
+},
+];
 
-let count1: number = 0;
-
-function incrementCount1() {
-  count1++;
-}
+const toppings = [
+{
+id: "sonka",
+label: "Sonka",
+price: 350,
+},
+{
+id: "gomba",
+label: "Gomba",
+price: 250,
+},
+{
+id: "kukorica",
+label: "Kukorica",
+price: 200,
+},
+{
+id: "szalami",
+label: "Szalámi",
+price: 400,
+},
+{
+id: "paprika",
+label: "Paprika",
+price: 250,
+},
+{
+id: "sajt",
+label: "Extra sajt",
+price: 450,
+},
+];
 
 export default function HomePage() {
-  const [count2, setCount2] = useState<number>(0);
-  const [count3, setCount3] = useState<number>(0);
-  return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100">
-    </main>
-  );
+const [name, setName] = useState("");
+const [sizeId, setSizeId] = useState("kozepes");
+
+return (
+<main className="min-h-screen bg-orange-50 px-4 py-10">
+<div className="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg">
+<h1 className="text-3xl font-bold text-orange-600">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pizza"><path d="m12 14-1 1"/><path d="m13.75 18.25-1.25 1.42"/><path d="M17.775 5.654a15.68 15.68 0 0 0-12.121 12.12"/><path d="M18.8 9.3a1 1 0 0 0 2.1 7.7"/><path d="M21.964 20.732a1 1 0 0 1-1.232 1.232l-18-5a1 1 0 0 1-.695-1.232A19.68 19.68 0 0 1 15.732 2.037a1 1 0 0 1 1.232.695z"/></svg> St.Stephen's 7 Pizza
+</h1>
+
+    <p className="mt-2 text-gray-600">
+      Állítsd össze a saját pizzádat!
+    </p>
+
+    {/* Vendég neve */}
+    <div className="mt-6">
+      <label className="mb-2 block font-semibold text-gray-700">
+        Vendég neve
+      </label>
+
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Írd be a neved"
+        className="w-full rounded-xl border border-gray-300 px-4 py-2 outline-none transition focus:border-orange-500"
+      />
+
+      <p className="mt-2 text-gray-600">
+        {name ? (
+          <>
+            Kedves <strong>{name}</strong>, állítsd össze a pizzádat!
+          </>
+        ) : (
+          "Add meg a nevedet!"
+        )}
+      </p>
+    </div>
+
+    {/* Méret */}
+    <div className="mt-6">
+      <h2 className="mb-3 text-xl font-bold text-gray-800">
+        Méret
+      </h2>
+
+      <div className="grid grid-cols-3 gap-3">
+        {sizes.map((size) => {
+          const active = size.id === sizeId;
+
+          return (
+            <button
+              key={size.id}
+              onClick={() => setSizeId(size.id)}
+              className={`cursor-pointer rounded-xl border px-4 py-3 transition active:scale-95 ${
+                active
+                  ? "border-orange-500 bg-orange-50 font-semibold text-orange-700"
+                  : "border-gray-200 bg-white hover:bg-gray-50"
+              }`}
+            >
+              <div>{size.label}</div>
+              <div className="mt-1 text-sm">
+                {size.price} Ft
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</main>
+
+);
 }
