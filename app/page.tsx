@@ -92,16 +92,12 @@ return (
               className={`cursor-pointer rounded-xl border px-4 py-3 transition active:scale-95 
                 ${active ? "border-orange-500 bg-orange-50 font-semibold text-orange-700" : "border-gray-200 bg-white hover:bg-gray-50"}`} key={size.id} onClick={() => setSizeId(size.id)}>
               <div>{size.label}</div>
-              <div className="mt-1 text-sm">
-                {size.price} Ft
-              </div>
-            </button>
-          );
+              <div className="mt-1 text-sm">{size.price} Ft</div>
+            </button>);
         })}
       </div>
     </div>
   </div>
 </main>
-
 );
 }
