@@ -6,6 +6,7 @@
 // const SIZES: SizeItem[] = [  { id: "kicsi", label: "Kicsi (24 cm)", price: 1800 },  { id: "kozepes", label: "Közepes (32 cm)", price: 2400 },  { id: "nagy", label: "Nagy (45 cm)", price: 3200 },];
 
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const SIZES = [
 {
@@ -94,15 +95,55 @@ return (
       <div className="grid grid-cols-3 gap-3">{SIZES.map((size) => {
           const active = size.id === sizeId;
           return (
+                <button
+                  className={`cursor-pointer rounded-xl border px-4 py-3 transition active:scale-95 ${active ? "border-orange-500 bg-orange-50 font-semibold text-orange-700" : "border-gray-200 bg-white hover:bg-gray-50"}`}
+                  key={size.id}
+                  onClick={() => setSizeId(size.id)}
+                  <div>{size.label}</div>
+                  <div className="mt-1 text-sm">{size.price} Ft</div>
+                </button>);
+            })}
+          </div>
+        </div>
+        <div className="mt-6 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-gray-800">Darabszám</h2>
+          <div className="flex items-center gap-4">
             <button
-              className={`cursor-pointer rounded-xl border px-4 py-3 transition active:scale-95 
-                ${active ? "border-orange-500 bg-orange-50 font-semibold text-orange-700" : "border-gray-200 bg-white hover:bg-gray-50"}`} key={size.id} onClick={() => setSizeId(size.id)}>
-              <div>{size.label}</div>
-              <div className="mt-1 text-sm">{size.price} Ft</div>
-            </button>);
-        })}
+              className="cursor-pointer rounded-xl border border-gray-200 bg-white px-4 py-2 text-xl transition hover:bg-gray-50 active:scale-95"
+              onClick={() => {
+                setQty((prev) => {
+                  if (prev <= 1) {
+                    toast.error("Legalább 1 darabot kell kérni.");
+                    return prev;
+                  }
+                  return prev - 1;
+                });
+              }}
+            </button>
+            <span className="min-w-10 text-center text-xl font-semibold">{qty}</span>
+            <button
+              className="cursor-pointer rounded-xl border border-gray-200 bg-white px-4 py-2 text-xl transition hover:bg-gray-50 active:scale-95"
+              onClick={() => {
+                setQty((prev) => {
+                  if (prev >= 10) {
+                    toast.error("Legfeljebb 10 darabot lehet kérni.");
+                    return prev;
+                  }
+                  return prev + 1;
+                });
+              }}
+            </button>
+          </div>
+        </div>
+        <div className="mt-6 flex items-center gap-3">
+          <input
+            type="checkbox"
+            checked={takeaway}
+            onChange={(e) => setTakeaway(e.target.checked)}
+            className="h-5 w-5 cursor-pointer"/>
+          <label className="cursor-pointer">Elvitelre kérem (−10%)</label>
+        </div>
       </div>
-    </div>
     {/* Feltétek */}
     <div className="mt-6">
       <h2 className="mb-3 text-xl font-bold text-gray-800">Feltétek {toppingIds.length} kiválasztva</h2>
@@ -122,5 +163,3 @@ return (
     </div>
   </div>
 </main>
-);
-}
