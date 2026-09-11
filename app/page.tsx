@@ -7,7 +7,7 @@
 
 import { useState } from "react";
 
-const sizes = [
+const SIZES = [
 {
 id: "kicsi",
 label: "Kicsi (24 cm)",
@@ -25,7 +25,7 @@ price: 3200,
 },
 ];
 
-const toppings = [
+const TOPPINGS = [
 {
 id: "sonka",
 label: "Sonka",
@@ -61,6 +61,8 @@ price: 450,
 export default function HomePage() {
 const [name, setName] = useState("");
 const [sizeId, setSizeId] = useState("kozepes");
+const [toppingIds, setToppingIds] = useState<string[]>([]);
+const [takeaway, setTakeaway] = useState(false);
 
 return (
 <main className="min-h-screen bg-orange-50 px-4 py-10">
@@ -89,7 +91,7 @@ return (
     {/* Méret */}
     <div className="mt-6">
       <h2 className="mb-3 text-xl font-bold text-gray-800">Méret</h2>
-      <div className="grid grid-cols-3 gap-3">{sizes.map((size) => {
+      <div className="grid grid-cols-3 gap-3">{SIZES.map((size) => {
           const active = size.id === sizeId;
           return (
             <button
@@ -97,6 +99,23 @@ return (
                 ${active ? "border-orange-500 bg-orange-50 font-semibold text-orange-700" : "border-gray-200 bg-white hover:bg-gray-50"}`} key={size.id} onClick={() => setSizeId(size.id)}>
               <div>{size.label}</div>
               <div className="mt-1 text-sm">{size.price} Ft</div>
+            </button>);
+        })}
+      </div>
+    </div>
+    {/* Feltétek */}
+    <div className="mt-6">
+      <h2 className="mb-3 text-xl font-bold text-gray-800">Feltétek {toppingIds.length} kiválasztva</h2>
+      <div className="grid grid-cols-3 gap-3">{TOPPINGS.map((topping) => {
+          const selected = toppingIds.includes(topping.id);
+          return (
+            <button className={`cursor-pointer rounded-xl border px-4 py-3 transition active:scale-95 
+                ${selected ? "border-orange-500 bg-orange-50 font-semibold text-orange-700" : "border-gray-200 bg-white hover:bg-gray-50"}`} key={topping.id} onClick={() => { 
+                  if (selected) setToppingIds(toppingIds.filter((id) => id !== topping.id)); 
+                  else setToppingIds([...toppingIds, topping.id]);
+                }}>
+              <div>{topping.label}</div>
+              <div className="mt-1 text-sm">{topping.price} Ft</div>
             </button>);
         })}
       </div>
